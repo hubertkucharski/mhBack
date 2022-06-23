@@ -20,7 +20,7 @@ export class GameRecord implements GameEntity {
 
     constructor(obj: NewGameEntity) {
         if(!obj.gameName || obj.gameName.length >100){
-            throw new ValidationError('Nazwa ogłoszenia nie może być pusta, ani przekraczać 100 znaków.');
+            throw new ValidationError('Nazwa gry nie może być pusta, ani przekraczać 100 znaków.');
         }
 
         this.gameId = obj.gameId;
@@ -61,4 +61,5 @@ export class GameRecord implements GameEntity {
             );
         return this.gameId;
     }
+
 }
