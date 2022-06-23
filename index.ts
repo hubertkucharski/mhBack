@@ -1,4 +1,4 @@
-import fetch from "cross-fetch";
+// import fetch from "cross-fetch";
 import express, {json, Router} from 'express';
 import cors from 'cors';
 import 'express-async-errors';
@@ -6,8 +6,7 @@ import 'express-async-errors';
 import rateLimit from "express-rate-limit";
 import {MHRouter} from "./routers/mh.router";
 import {config} from './config/config';
-import {BGGRouter} from "./routers/bgg.router";
-import {GameRecord} from "./records/game.record";
+// import {GameRecord} from "./records/game.record";
 
 const app = express();
 
@@ -32,7 +31,7 @@ app.use(rateLimit({
 //         const json = await game.json()
 //
 //         const {
-//             gameId: gameBggID,
+//             gameId: gameBggId,
 //             name: gameName,
 //             image,
 //             thumbnail,
@@ -43,7 +42,7 @@ app.use(rateLimit({
 //         } = json;
 //         if(isExpansion === false){
 //             console.log(gameBggID)
-//             const newGame = new GameRecord({gameBggID, gameName, image, thumbnail, yearPublished, averageRating, rank})
+//             const newGame = new GameRecord({gameBggId, gameName, image, thumbnail, yearPublished, averageRating, rank})
 //             await newGame.insert();
 //         }else console.log(`Brak nr ${i} ${typeof isExpansion}`)
 //         // console.log(json.name)

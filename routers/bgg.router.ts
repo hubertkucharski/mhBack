@@ -1,6 +1,6 @@
 import {Router} from "express";
 import {GameRecord} from "../records/game.record";
-import fetch from 'node-fetch';
+// import fetch from 'node-fetch';
 
 export const BGGRouter = Router()
     .get('/', async (req,  res) =>{
@@ -14,16 +14,16 @@ export const BGGRouter = Router()
         // const json = await game.json()
 
         // const {gameId} = json;
-        // const newGame = new GameRecord({gameBggID: 341,gameName: 'dara', gameImage: 'urlimaga', gameThumbnail: 'url2', yearPublished: 2000, averageRating: 8.3333, rank: 5.666})
+        // const newGame = new GameRecord({gameBggId: 341,gameName: 'dara', gameImage: 'urlimaga', gameThumbnail: 'url2', yearPublished: 2000, averageRating: 8.3333, rank: 5.666})
         // await newGame.insert();
         // res.json(json)
         res.send('ok')
     })
-    // .get('/:id', async (req, res) =>{
-    //     const game = await GameRecord.getOne(req.params.id)
-    //     console.log(game)
-    //     res.json(game)
-    // })
+    .get('/:id', async (req, res) =>{
+        const game = await GameRecord.getOne(req.params.id)
+
+        res.json(game)
+    })
     // .post('/', async (req, res) => {
     //     const game = new GameRecord(req.body);
     //     await game.insert()

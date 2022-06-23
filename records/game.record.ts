@@ -3,7 +3,7 @@ import {ValidationError} from "../utils/errors";
 import {pool} from "../utils/db";
 import {FieldPacket} from "mysql2";
 import {v4 as uuid} from "uuid";
-import {GameEntity, NewGameEntity} from "../types/GameEntity";
+import {GameEntity, NewGameEntity, SimpleGameEntity} from "../types/gameEntity";
 
 
 type GameRecordResults = [GameEntity[], FieldPacket[]];
@@ -11,7 +11,7 @@ type GameRecordResults = [GameEntity[], FieldPacket[]];
 export class GameRecord implements GameEntity {
     public gameId: string;
     public gameName: string;
-    public gameBggID: number;
+    public gameBggId: number;
     public image: string;
     public thumbnail: string;
     public yearPublished: number;
@@ -25,7 +25,7 @@ export class GameRecord implements GameEntity {
 
         this.gameId = obj.gameId;
         this.gameName = obj.gameName;
-        this.gameBggID = obj.gameBggID;
+        this.gameBggId = obj.gameBggId;
         this.image = obj.image;
         this.thumbnail = obj.thumbnail;
         this.yearPublished = obj.yearPublished;
@@ -36,34 +36,27 @@ export class GameRecord implements GameEntity {
 //
     static async getOne(id: string): Promise<GameRecord | null> {
 
-        // await pool.execute('update `ads` set `clicksCounter` = `clicksCounter` + 1 where `id` = :id', {
-        //     id,
-        // });
         const [results] = await pool.execute('select * from `mh_games` where `gameId` = :id', {
             id,
         }) as GameRecordResults;
 
         return results.length === 0 ? null : new GameRecord(results[0])
     }
-    // // static async listAll(): Promise<AdRecord[]> {
-    // //     const [results] = await pool.execute('select * from `ads`') as AdRecordResults;
-    // //     return results.map((obj) => new AdRecord(obj));
-    // // }
-    // //powyżej zbędne pod dodaniu funkcji findAll z wyszukaniem LIKE
-    // static async findAll(name: string): Promise<SimpleAdEntity[]>{
-    //     const [results] = await pool.execute('select * from `ads` where `name` like :search', { search: `%${name }%`,}) as AdRecordResults;
-    //
-    //     return results.map(result => {
-    //         const {id, lat, lon, clicksCounter} = result;
-    //         return { id, lat, lon, clicksCounter };
-    //     })
-    // }
+
+    static async findAll(name: string): Promise<SimpleGameEntity[]>{
+        const [results] = await pool.execute('select * from `mh_games` where `gameName` like :search', { search: `%${name }%`,}) as GameRecordResults;
+
+        return results.map(result => {
+            const {gameId, gameName} = result;
+            return { gameId, gameName };
+        })
+    }
     async insert() {
         if (!this.gameId) {
             this.gameId = uuid()
         } else throw new Error('Cannot insert something that is alredy inserted.')
         await pool
-            .execute('insert into `mh_games` (`gameId`,`gameBggID`, `gameName`, `image`,`thumbnail`, `yearPublished`, `averageRating`, `rank`) values (:gameId, :gameBggID, :gameName, :image, :thumbnail, :yearPublished, :averageRating, :rank)', this
+            .execute('insert into `mh_games` (`gameId`,`gameBggId`, `gameName`, `image`,`thumbnail`, `yearPublished`, `averageRating`, `rank`) values (:gameId, :gameBggId, :gameName, :image, :thumbnail, :yearPublished, :averageRating, :rank)', this
 
             );
         return this.gameId;

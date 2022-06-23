@@ -1,9 +1,13 @@
 export interface NewGameEntity extends Omit<GameEntity, 'gameId'>{
     gameId?: string;
 }
+export interface SimpleGameEntity {
+    gameId: string,
+    gameName: string
+}
 export interface GameEntity{
     gameId: string,
-    gameBggID: number,
+    gameBggId: number,
     gameName: string,
     image: string,
     thumbnail: string,

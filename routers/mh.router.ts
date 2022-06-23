@@ -6,14 +6,14 @@ export const MHRouter = Router()
         res.send('Hello')
     })
 
-    // .get('/search/:name?', async (req, res) => {
-    //     const game = await GameRecord.findAll(req.params.gameName ?? '');
-    //
-    //     res.json(game)
-    // })
+    .get('/search/:gameName?', async (req, res) => {
+        const game = await GameRecord.findAll(req.params.gameName ?? '');
+
+        res.json(game)
+    })
     .get('/:id', async (req, res) =>{
         const game = await GameRecord.getOne(req.params.id)
-        console.log(game)
+
         res.json(game)
     })
     // .post('/', async (req, res) => {
