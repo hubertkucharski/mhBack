@@ -20,7 +20,7 @@ export class GameRecord implements GameEntity {
 
     constructor(obj: NewGameEntity) {
         if(!obj.gameName || obj.gameName.length >100){
-            throw new ValidationError('Nazwa gry nie może być pusta, ani przekraczać 100 znaków.');
+            throw new ValidationError('Name of the game should not be empty or have more then 100 characters.');
         }
 
         this.gameId = obj.gameId;
@@ -33,7 +33,6 @@ export class GameRecord implements GameEntity {
         this.rank = obj.rank;
     }
 
-//
     static async getOne(id: string): Promise<GameRecord | null> {
 
         const [results] = await pool.execute('select * from `mh_games` where `gameId` = :id', {
@@ -54,7 +53,7 @@ export class GameRecord implements GameEntity {
     async insert() {
         if (!this.gameId) {
             this.gameId = uuid()
-        } else throw new Error('Cannot insert something that is alredy inserted.')
+        } else throw new Error('Cannot insert something that is already inserted.')
         await pool
             .execute('insert into `mh_games` (`gameId`,`gameBggId`, `gameName`, `image`,`thumbnail`, `yearPublished`, `averageRating`, `rank`) values (:gameId, :gameBggId, :gameName, :image, :thumbnail, :yearPublished, :averageRating, :rank)', this
 

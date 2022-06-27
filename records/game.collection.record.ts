@@ -22,6 +22,7 @@ export class GameCollectionRecord implements CollectionEntity {
 
     async insertToCollection() {
         this.collectionId = uuid()
+        console.log(this.userId, this.gameId)
         await pool
             .execute('insert into `mh_users_games` (`collectionId`,`userId`, `gameId`) values (:collectionId, :userId, :gameId)', this
             );
