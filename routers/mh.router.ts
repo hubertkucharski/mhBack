@@ -35,6 +35,7 @@ export const MHRouter = Router()
         res.json(game)
     })
     .get('/:id', async (req, res) =>{
+
         const game = await GameRecord.getOne(req.params.id)
 
         res.json(game)
@@ -45,5 +46,6 @@ export const MHRouter = Router()
         const game = new GameCollectionRecord(req.body);
 
         await game.insertToCollection()
+        console.log('game', game)
         res.json(game)
     })

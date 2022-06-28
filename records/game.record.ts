@@ -35,7 +35,7 @@ export class GameRecord implements GameEntity {
 
     static async getOne(id: string): Promise<GameRecord | null> {
 
-        const [results] = await pool.execute('select * from `mh_games` where `gameId` = :id', {
+        const [results] = await pool.execute('select * from `mh_games` where `gameId` like :id', {
             id,
         }) as GameRecordResults;
 

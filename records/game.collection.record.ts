@@ -21,13 +21,22 @@ export class GameCollectionRecord implements CollectionEntity {
         }
 
     async insertToCollection() {
-        this.collectionId = uuid()
+
         console.log(this.userId, this.gameId)
+
+        const [result] = await pool
+            .execute('select * from `mh_users_games` where `userId` like :userId and `gameId` like :gameId', this) as GameCollectionRecordResults;
+
+        if (!result[0]){
+            this.collectionId = uuid()
         await pool
             .execute('insert into `mh_users_games` (`collectionId`,`userId`, `gameId`) values (:collectionId, :userId, :gameId)', this
             );
-        return console.log(this.collectionId);
+        return this.collectionId;
+        }
+        else return null
     }
+
     static async findAllUsers(name: string): Promise<SimpleUsersEntity[] >{
         const [results] = await pool.execute('select * from `mh_users` where `userName` like :search', { search: `%${name }%`,}) as GameCollectionRecordResults;
 
