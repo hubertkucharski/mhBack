@@ -46,6 +46,6 @@ export const MHRouter = Router()
         const game = new GameCollectionRecord(req.body);
 
         await game.insertToCollection()
-        console.log('game', game)
+
         res.json(game)
     })
