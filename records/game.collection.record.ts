@@ -54,4 +54,7 @@ export class GameCollectionRecord implements CollectionEntity {
             return { userId, gameId};
         })
     }
+    async deleteFromCollection(): Promise<void>{
+            await pool.execute('delete from `mh_users_games` where `gameId` = :gameId and  `userId` = :userId', this)
+    }
 }

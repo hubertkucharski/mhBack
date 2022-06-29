@@ -4,13 +4,13 @@ import {GameCollectionRecord} from "../records/game.collection.record";
 
 export const MHRouter = Router()
     .get('/', async (req,  res) =>{
-        res.send('Hello')
+        res.send('Hello');
     })
 
     .get('/search/:gameName?', async (req, res) => {
         const game = await GameRecord.findAll(req.params.gameName ?? '');
 
-        res.json(game)
+        res.json(game);
     })
 
     .get('/my-collection/:userId', async (req, res) => {
@@ -27,25 +27,33 @@ export const MHRouter = Router()
         //     collection.push(await GameRecord.getOne(games.gameId))
         // }
         // console.log( collection)
-        res.json(games)
+        res.json(games);
     })
     .get('/my-collection/', async (req, res) => {
         const game = await GameCollectionRecord.findAllUsers( '');
 
-        res.json(game)
+        res.json(game);
     })
     .get('/:id', async (req, res) =>{
 
-        const game = await GameRecord.getOne(req.params.id)
+        const game = await GameRecord.getOne(req.params.id);
 
-        res.json(game)
+        res.json(game);
     })
 
     .post('/', async (req, res) => {
-        // console.log(req.body)
+
         const game = new GameCollectionRecord(req.body);
 
-        await game.insertToCollection()
+        await game.insertToCollection();
 
-        res.json(game)
+        res.json(game);
+    })
+    .delete('/', async (req, res) =>{
+
+        const game = new GameCollectionRecord(req.body)
+
+        await game.deleteFromCollection();
+
+        res.json(game);
     })
