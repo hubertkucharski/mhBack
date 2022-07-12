@@ -22,8 +22,6 @@ export class GameCollectionRecord implements CollectionEntity {
 
     async insertToCollection() {
 
-        console.log(this.userId, this.gameId)
-
         const [result] = await pool
             .execute('select * from `mh_users_games` where `userId` like :userId and `gameId` like :gameId', this) as GameCollectionRecordResults;
 
