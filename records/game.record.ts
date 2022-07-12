@@ -11,9 +11,6 @@ type GameRecordResults = [GameEntity[], FieldPacket[]];
 export class GameRecord implements GameEntity {
     public gameId: string;
     public gameName: string;
-    public gameBggId: number;
-    public image: string;
-    public thumbnail: string;
     public yearPublished: number;
     public averageRating: number;
     public rank: number;
@@ -25,9 +22,6 @@ export class GameRecord implements GameEntity {
 
         this.gameId = obj.gameId;
         this.gameName = obj.gameName;
-        this.gameBggId = obj.gameBggId;
-        this.image = obj.image;
-        this.thumbnail = obj.thumbnail;
         this.yearPublished = obj.yearPublished;
         this.averageRating = obj.averageRating;
         this.rank = obj.rank;
@@ -35,7 +29,7 @@ export class GameRecord implements GameEntity {
 
     static async getOne(id: string): Promise<GameRecord | null> {
 
-        const [results] = await pool.execute('select * from `mh_games` where `gameId` like :id', {
+        const [results] = await pool.execute('select * from `bgg_games` where `gameId` like :id', {
             id,
         }) as GameRecordResults;
 
@@ -43,7 +37,7 @@ export class GameRecord implements GameEntity {
     }
 
     static async findAll(name: string): Promise<SimpleGameEntity[]>{
-        const [results] = await pool.execute('select * from `mh_games` where `gameName` like :search', { search: `%${name }%`,}) as GameRecordResults;
+        const [results] = await pool.execute('select * from `bgg_games` where `gameName` like :search', { search: `%${name }%`,}) as GameRecordResults;
 
         return results.map(result => {
             const {gameId, gameName} = result;
