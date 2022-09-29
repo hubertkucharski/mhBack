@@ -5,7 +5,7 @@ export class User extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
     userId: string;
 
-    @Column({unique: true, nullable: false,})
+    @Column({unique: true, nullable: true,})
     userBggId: string;
 
     @Column({unique: true})
@@ -17,7 +17,11 @@ export class User extends BaseEntity {
     @Column()
     lastName: string;
 
-    @Column()
+    @Column({
+        nullable: true,
+        length: 60,
+        default: null,
+    })
     password: string;
 
     @Column()
@@ -29,4 +33,11 @@ export class User extends BaseEntity {
         default: null,
     })
     token: string;
+
+    @Column({
+        nullable: true,
+        length: 255,
+        default: null,
+    })
+    accessToken: string;
 }

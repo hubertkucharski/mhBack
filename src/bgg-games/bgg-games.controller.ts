@@ -15,7 +15,7 @@ export class BggGamesController {
     }
     @Get('/find-by-name/:name')
     async findGameByName(@Param('name') name: string) {
-        console.log(name)
+        // console.log(name)
         return this.bggGamesService.findGameByName(name);
     }
     @Get('/find-by-name/')
