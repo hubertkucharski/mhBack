@@ -1,4 +1,5 @@
-import {BaseEntity, Column, Entity, PrimaryGeneratedColumn} from 'typeorm';
+import {BaseEntity, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {MhGames} from "../bgg-games/bggGames.entity";
 
 @Entity()
 export class User extends BaseEntity {
@@ -40,4 +41,10 @@ export class User extends BaseEntity {
         default: null,
     })
     accessToken: string;
+
+    @ManyToMany(type => MhGames, entity => entity.gameId, {
+        cascade: true,
+    })
+    @JoinTable()
+    gameId: MhGames[];
 }

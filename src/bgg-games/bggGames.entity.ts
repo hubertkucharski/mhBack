@@ -1,4 +1,5 @@
-import {BaseEntity, Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {BaseEntity, Column, Entity, ManyToMany, PrimaryGeneratedColumn} from "typeorm";
+import {User} from "../user/user.entity";
 
 @Entity()
 export class MhGames extends BaseEntity {
@@ -48,4 +49,8 @@ export class MhGames extends BaseEntity {
         type: 'smallint',
     })
     rank: number;
+
+    @ManyToMany(type => User, entity => entity.userId)
+    userId: User[]
+
 }

@@ -1,12 +1,21 @@
-import {Controller, Get, Inject, Param} from '@nestjs/common';
-import {CollectionService} from "./collection.service";
+import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
+import { CollectionService } from './collection.service';
 
 @Controller('collection')
 export class CollectionController {
-    constructor(@Inject(CollectionService) private collectionService: CollectionService) {}
+  constructor(
+    @Inject(CollectionService) private collectionService: CollectionService,
+  ) {}
 
-    @Get('/:id')
-    async findUserGames(@Param('id') id: string) {
-        return this.collectionService.findUserGames(id);
-    }
+  @Get('/:id')
+  async findUserGames(@Param('id') id: string) {
+    return this.collectionService.findUserGames(id);
+  }
+
+  @Post('/add')
+  async addGameToCollection(
+    @Body() data: { gameId: string; userId: string },
+  ): Promise<{ statusCode: number; message: string }> {
+    return this.collectionService.addGameToCollection(data);
+  }
 }
