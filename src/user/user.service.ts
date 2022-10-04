@@ -6,15 +6,15 @@ import { UserFiltered } from '../../types/user';
 export class UserService {
   constructor() {}
 
-  async findUser(userId: string) {
+  async findUser(userId: string): Promise<User> {
     return await User.findOneOrFail({ where: { userId } });
   }
 
-  async findUserEmail(email: string) {
+  async findUserEmail(email: string): Promise<User> {
     return await User.findOneOrFail({ where: { email } });
   }
 
-  async findAllUsers() {
+  async findAllUsers(): Promise<User[]> {
     return await User.find();
   }
 

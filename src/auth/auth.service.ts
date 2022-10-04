@@ -15,6 +15,7 @@ import { UserService } from '../user/user.service';
 import { ConfigService } from '@nestjs/config';
 import { AuthLoginUserDto } from './dto/auth-login-user.dto';
 import { ValidateSessionUserResponse } from '../../types/auth/validateSessionUserResponse';
+import { MailService } from '../mail/mail.service';
 
 interface Activate {
   password: string;
@@ -25,6 +26,7 @@ interface Activate {
 export class AuthService {
   constructor(
     @Inject(forwardRef(() => UserService)) private userService: UserService,
+    @Inject(forwardRef(() => MailService)) private mailService: MailService,
     private jwtService: JwtService,
     private configService: ConfigService,
   ) {}
@@ -108,7 +110,8 @@ export class AuthService {
   generateToken(user: User) {
     const payload = {
       email: user.email,
-      id: user.userId,
+      userId: user.userId,
+      token: user.token,
     };
 
     return this.jwtService.sign(payload, { expiresIn: '10h' });
@@ -123,6 +126,14 @@ export class AuthService {
         message: 'Użytkownik o tym emailu nie istnieje',
       };
     }
+
+    const token = this.generateToken(user);
+
+    await this.mailService.sendMail(
+      email,
+      `Reset hasła do aplikacji mh`,
+      `<a href="http://localhost:3000/reset-password?token=${token}">Kliknij, aby zresetować hasło</a>`,
+    );
 
     return { statusCode: 200, message: 'Email do resetowania hasła wysłany' };
   }
