@@ -59,7 +59,7 @@ export class AuthController {
   async validateUser(@Req() req: Request, @Res() res: Response): Promise<any> {
   }
 
-  @Post('/reset')
+  @Post('/send-reset-email')
   async sendEmailToResetPassword(
     @Body('email') email: string,
     @Res({ passthrough: true }) res: Response,

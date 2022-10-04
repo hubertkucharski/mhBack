@@ -1,5 +1,4 @@
-import { ExtractJwt } from 'passport-jwt';
-import { Strategy } from 'passport-local';
+import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import {
   forwardRef,
@@ -8,9 +7,9 @@ import {
   Inject,
   Injectable,
 } from '@nestjs/common';
-import { extractJwtFromQuery } from './extract-jwt-from-req-param';
-import { UserService } from '../../user/user.service';
 import appConfig from '../config/app.config';
+import { UserService } from '../../user/user.service';
+import { extractJwtFromQuery } from './extract-jwt-from-req-param';
 
 @Injectable()
 export class JwtResetPasswordStrategy extends PassportStrategy(
