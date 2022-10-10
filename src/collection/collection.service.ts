@@ -14,8 +14,7 @@ export class CollectionService {
         return userGames[0].gameId.some( el => el.gameId == gameId )
     }
 
-    async addGameToCollection(data: { gameId: string; userId: string }) {
-        const { userId, gameId } = data;
+    async addGameToCollection( gameId: string , userId: string) {
         // finds relations not only user
         const user = await this.findUserGames(userId);
         const game = await this.bggGamesService.findGameById(gameId);
@@ -33,8 +32,7 @@ export class CollectionService {
 
         return {message: "success", statusCode: 200};
     }
-    async removeGameFromCollection(data: { gameId: string; userId: string }) {
-        const { userId, gameId } = data;
+    async removeGameFromCollection(gameId: string, userId: string) {
         // finds relations not only user
         const user = await this.findUserGames(userId);
         const game = await this.bggGamesService.findGameById(gameId);

@@ -1,5 +1,7 @@
-import {Body, Controller, Delete, Get, Inject, Param, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Inject, Param, Post, Req, UseGuards} from '@nestjs/common';
 import { CollectionService } from './collection.service';
+import {UserAuthGuard} from "../auth/auth-guards/user-auth.guard";
+import {User} from "../user/user.entity";
 
 @Controller('collection')
 export class CollectionController {
@@ -13,14 +15,20 @@ export class CollectionController {
   }
 
   @Post('/add')
+  @UseGuards(UserAuthGuard)
   async addGameToCollection(
-    @Body() data: { gameId: string; userId: string },
+    @Req() { user }: { user: User },
+    @Body() { gameId }: { gameId: string },
   ): Promise<{ statusCode: number; message: string }> {
-    return this.collectionService.addGameToCollection(data);
+    console.log(user);
+    return this.collectionService.addGameToCollection(gameId, user.userId);
   }
   @Delete('/remove')
-  async removeGameToCollection(@Body() data: { gameId: string; userId: string },
-  ): Promise<{ statusCode: number; message: string }>{
-    return this.collectionService.removeGameFromCollection(data);
+  @UseGuards(UserAuthGuard)
+  async removeGameToCollection(
+      @Req() { user }: { user: User },
+      @Body() { gameId}: { gameId: string },
+  ): Promise<{ statusCode: number; message: string }> {
+    return this.collectionService.removeGameFromCollection(gameId, user.userId);
   }
 }
