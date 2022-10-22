@@ -12,12 +12,12 @@ export class AuthCreateUserDto {
     })
     email: string;
 
-    // @IsString()
-    // @MinLength(1, {
-    //     message: 'First name is required',
-    // })
-    // firstName: string;
-    //
+    @IsString()
+    @MinLength(1, {
+        message: 'First name is required',
+    })
+    firstName: string;
+
     // @IsString()
     // @MinLength(1, {
     //     message: 'Last name is required',

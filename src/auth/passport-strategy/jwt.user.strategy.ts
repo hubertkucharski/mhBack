@@ -10,7 +10,8 @@ import {
 
 import { UserService } from '../../user/user.service';
 import { extractJwtFromCookie } from './extract-jwt-from-cookie';
-import appConfig from "../config/app.config";
+// import appConfig from "../config/app.config";
+import {config} from "../../../config/config";
 
 @Injectable()
 export class JwtUserStrategy extends PassportStrategy(Strategy, 'user') {
@@ -20,7 +21,8 @@ export class JwtUserStrategy extends PassportStrategy(Strategy, 'user') {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([extractJwtFromCookie]),
       ignoreExpiration: false,
-      secretOrKey: appConfig().jwtSecret,
+      // secretOrKey: appConfig().jwtSecret,
+      secretOrKey: config.JWT_SECRET,
     });
   }
 

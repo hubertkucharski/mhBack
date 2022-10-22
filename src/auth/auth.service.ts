@@ -51,7 +51,7 @@ export class AuthService {
       return this.userService.filterUsersData(user);
     } catch (e) {
       if (e.code === 'ER_DUP_ENTRY') {
-        throw new ConflictException('Username already exists');
+        throw new ConflictException('E-mail already exists');
       } else {
         throw new InternalServerErrorException(e.message);
       }

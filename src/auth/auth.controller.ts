@@ -84,7 +84,6 @@ export class AuthController {
   validateSessionUser(
     @Req() { user }: { user: User },
   ): ValidateSessionUserResponse {
-    console.log('check user');
     return this.authService.validateSessionUser(user);
   }
 }

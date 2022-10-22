@@ -2,6 +2,9 @@
 /dist
 /node_modules
 /config/config.ts
+/config/typeOrm.config.ts
+.env.stage.dev
+.env
 
 # Logs
 logs
