@@ -12,10 +12,10 @@ import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from '../../types';
 import { Response } from 'express';
 import { UserService } from '../user/user.service';
-import { ConfigService } from '@nestjs/config';
 import { AuthLoginUserDto } from './dto/auth-login-user.dto';
 import { ValidateSessionUserResponse } from '../../types/auth/validateSessionUserResponse';
 import { MailService } from '../mail/mail.service';
+import {config} from "../../config/config";
 
 interface Activate {
   password: string;
@@ -28,7 +28,6 @@ export class AuthService {
     @Inject(forwardRef(() => UserService)) private userService: UserService,
     @Inject(forwardRef(() => MailService)) private mailService: MailService,
     private jwtService: JwtService,
-    private configService: ConfigService,
   ) {}
 
   async setPassword(password: string) {
@@ -78,10 +77,10 @@ export class AuthService {
     });
     res
       .cookie('jwt', accessToken, {
-        secure: this.configService.get('COOKIE_SECURE'),
-        domain: this.configService.get('COOKIE_DOMAIN'),
-        httpOnly: this.configService.get('COOKIE_HTTPONLY'),
-        maxAge: this.configService.get('COOKIE_MAX_AGE'),
+        secure: config.COOKIE_SECURE,
+        domain: config.COOKIE_DOMAIN,
+        httpOnly: config.COOKIE_HTTPONLY,
+        maxAge: config.COOKIE_MAX_AGE,
       })
       .json(this.userService.filterUsersData(user));
     return { message: 'Zalogowano', user, statusCode: 200 };

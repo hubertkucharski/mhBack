@@ -1,3 +1,5 @@
+import {config} from "../../../config/config";
+
 export default () => ({
-  jwtSecret: process.env.JWT_SECRET,
+  jwtSecret: config.JWT_SECRET,
 });
