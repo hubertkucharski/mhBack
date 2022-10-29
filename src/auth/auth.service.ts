@@ -131,7 +131,7 @@ export class AuthService {
     await this.mailService.sendMail(
       email,
       `Reset hasła do aplikacji mh`,
-      `<a href="http://localhost:3000/reset-password?token=${token}">Kliknij, aby zresetować hasło</a>`,
+      `<a href="${config.corsOrigin}/reset-password?token=${token}">Kliknij, aby zresetować hasło</a>`,
     );
 
     return { statusCode: 200, message: 'Email do resetowania hasła wysłany' };
