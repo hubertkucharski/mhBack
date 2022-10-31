@@ -3,19 +3,20 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { MailService } from './mail.service';
 import { ConfigService } from '@nestjs/config';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { config as localConfig } from '../../config/config';
 
 @Module({
   imports: [
     MailerModule.forRootAsync({
-      useFactory: async (config: ConfigService) => ({
+      useFactory: async () => ({
         transport: {
           host: 'smtp.gmail.com',
           port: 465,
           ignoreTLS: true,
           secure: true,
           auth: {
-            user: 'megakauth@gmail.com',
-            pass: config.get('MAIL_SECRET'),
+            user: localConfig.MAIL_USER,
+            pass: localConfig.MAIL_SECRET,
           },
           tls: {
             rejectUnauthorized: false,
