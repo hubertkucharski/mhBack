@@ -8,7 +8,7 @@ import { config as localConfig } from '../../config/config';
 @Module({
   imports: [
     MailerModule.forRootAsync({
-      useFactory: async (config: ConfigService) => ({
+      useFactory: async () => ({
         transport: {
           host: 'smtp.gmail.com',
           port: 465,
