@@ -7,7 +7,6 @@ import {
   Inject,
   Injectable,
 } from '@nestjs/common';
-// import appConfig from '../config/app.config';
 import { UserService } from '../../user/user.service';
 import { extractJwtFromQuery } from './extract-jwt-from-req-param';
 import {config} from "../../../config/config";
@@ -23,7 +22,6 @@ export class JwtResetPasswordStrategy extends PassportStrategy(
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([extractJwtFromQuery]),
       ignoreExpiration: false,
-      // secretOrKey: appConfig().jwtSecret,
       secretOrKey: config.JWT_SECRET,
     });
   }
